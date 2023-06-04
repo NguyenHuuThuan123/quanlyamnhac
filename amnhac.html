@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Danh sách bài hát</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Danh sách bài hát</h1>
+    <input type="text" id="search-song" placeholder="Nhập tên bài hát">
+    <input type="text" id="search-artist" placeholder="Nhập tên ca sĩ">
+    <table id="song-table">
+        <tr>
+            <th>Tên ca sĩ</th>
+            <th>Tên bài hát</th>
+            <th>Tông</th>
+            <th>Ghi chú</th>
+        </tr>
+    </table>
+
+    <script>
+        // Dữ liệu danh sách bài hát
+        var songs = [
+            { caSi: 'Nguyệt', tenBaiHat: 'Chân tình', tong: 'C', ghiChu: 'Ghi chú 1' },
+            { caSi: 'Hải', tenBaiHat: 'nhạc cỏ', tong: 'D', ghiChu: 'Ghi chú 2' },
+            { caSi: 'Đăng', tenBaiHat: 'ballad', tong: 'E', ghiChu: 'Ghi chú 3' },   
+            // Thêm các bài hát khác vào đây
+        ];
+
+        // Lấy table element bằng ID
+        var table = document.getElementById('song-table');
+
+        // Đổ dữ liệu vào bảng
+        function renderTable() {
+            table.innerHTML = ''; // Xóa dữ liệu cũ trên bảng
+            var searchSong = document.getElementById('search-song').value.toLowerCase();
+            var searchArtist = document.getElementById('search-artist').value.toLowerCase();
+            for (var i = 0; i < songs.length; i++) {
+                var song = songs[i];
+                if (
+                    song.tenBaiHat.toLowerCase().includes(searchSong) &&
+                    song.caSi.toLowerCase().includes(searchArtist)
+                ) {
+                    var row = table.insertRow();
+                    var caSiCell = row.insertCell();
+                    var tenBaiHatCell = row.insertCell();
+                    var tongCell = row.insertCell();
+                    var ghiChuCell = row.insertCell();
+                    caSiCell.innerHTML = song.caSi;
+                    tenBaiHatCell.innerHTML = song.tenBaiHat;
+                    tongCell.innerHTML = song.tong;
+                    ghiChuCell.innerHTML = song.ghiChu;
+                }
+            }
+        }
+
+        // Gắn sự kiện cho input tìm kiếm
+        var searchSongInput = document.getElementById('search-song');
+        var searchArtistInput = document.getElementById('search-artist');
+        searchSongInput.addEventListener('input', renderTable);
+        searchArtistInput.addEventListener('input', renderTable);
+
+        // Hiển thị bảng ban đầu
+        renderTable();
+    </script>
+</body>
+</html>
